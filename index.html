@@ -23,6 +23,7 @@
         <div id="unity-build-title">RPG Live Temp</div>
       </div>
     </div>
+    
     <script async src="https://telegram.org/js/telegram-widget.js?7"
         data-telegram-login="RGPLive_bot"
         data-size="large"
@@ -33,11 +34,17 @@
 
     <script>
       function onTelegramAuth(user) {
-        // Pass data to Unity
-        var unityInstance = unityFramework; // Or the object used to initialize Unity
-        unityInstance.SendMessage('TelegramAuthHandler', 'OnTelegramAuth', JSON.stringify(user));
+        console.log("Telegram user:", user);
+        if (typeof unityInstance !== 'undefined') {
+            unityInstance.SendMessage('TelegramAuthHandler', 'OnTelegramAuth', JSON.stringify(user));
+        } else if (typeof unityFramework !== 'undefined') {
+            unityFramework.SendMessage('TelegramAuthHandler', 'OnTelegramAuth', JSON.stringify(user));
+        } else {
+            console.error("Unity instance not found");
+        }
       }
     </script>
+
     <script>
 
       var container = document.querySelector("#unity-container");
