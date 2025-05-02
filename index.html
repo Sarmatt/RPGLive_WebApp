@@ -127,11 +127,11 @@
       document.body.appendChild(script);
 
       
-      window.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('DOMContentLoaded', () => {
         // Log the Telegram object to the console for debugging
-        console.error("window.Telegram:", window.Telegram);
+        console.log("window.Telegram:", window.Telegram);
         
-        if (window.Telegram && window.Telegram.WebApp) { 
+        if (window.Telegram && window.Telegram.WebApp) {
           const tg = window.Telegram.WebApp;
           tg.ready(); // обов'язково
           const user = tg.initDataUnsafe.user;
@@ -142,8 +142,9 @@
             window.unityInstance.SendMessage("TelegramBridge", "OnUserData", json);
           }
         } else {
-          console.error("Telegram.WebApp API is not available");
+          console.warn("Telegram.WebApp API is not available");
         }
+      });
 
     </script>
   </body>
