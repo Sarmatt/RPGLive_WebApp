@@ -23,6 +23,27 @@
     </div>
   </div>
 
+  <script type="text/javascript">
+    function OpenFileDialog() {
+        let input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*"; // Adjust for your file type
+        input.onchange = e => {
+            let file = e.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    // Pass the file data to Unity
+                    SendMessage("FirebaseImagePicker", "OnFileSelected", event.target.result);
+                };
+                reader.readAsDataURL(file); // Read file as DataURL
+            }
+        };
+        input.click();
+    }
+  </script>
+
+
   <!-- Telegram Auth Callback Script -->
   <script>
     var unityInstance = null;
