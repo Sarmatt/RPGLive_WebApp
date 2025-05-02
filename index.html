@@ -52,4 +52,66 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/RPGLive_WebApp.loader.js";
       var config = {
-        data
+        dataUrl: buildUrl + "/RPGLive_WebApp.data",
+        frameworkUrl: buildUrl + "/RPGLive_WebApp.framework.js",
+        codeUrl: buildUrl + "/RPGLive_WebApp.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "RPG Live Temp",
+        productVersion: "0.1",
+        showBanner: unityShowBanner,
+      };
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+
+      document.body.appendChild(script);
+
+      window.addEventListener('DOMContentLoaded', () => {
+        // Log the Telegram object to the console for debugging
+        console.error("window.Telegram:", window.Telegram);
+        
+        if (window.Telegram && window.Telegram.WebApp) {
+          const tg = window.Telegram.WebApp;
+          tg.ready(); // обов'язково
+          const user = tg.initDataUnsafe.user;
+
+          if (user) {
+            const json = JSON.stringify(user);
+            // передаємо в Unity
+            window.unityInstance.SendMessage("TelegramBridge", "OnUserData", json);
+          }
+        } else {
+          console.error("Telegram.WebApp API is not available");
+        }
+      });
+
+    </script>
+  </body>
+</html>
