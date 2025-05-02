@@ -123,13 +123,18 @@
       unityInstance.SetFullscreen(1);
     };
 
+
+
     // ✅ Telegram WebApp integration
     const tg = window.Telegram.WebApp;
     tg.ready();
 
     const user = tg.initDataUnsafe.user;
+        console.error("Test 1");
     if (user) {
+         console.error("Test 2");
       const json = JSON.stringify(user);
+      console.error("Test 3");
       unityInstance.SendMessage('TelegramBridge', 'OnUserData', json);
     }
 
