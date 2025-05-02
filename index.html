@@ -6,10 +6,9 @@
     <title>Unity WebGL Player | RPG Live Temp</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
   </head>
   <body>
-    <div id="unity-container" class="unity-mobile">
+    <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
@@ -24,7 +23,6 @@
         <div id="unity-build-title">RPG Live Temp</div>
       </div>
     </div>
-
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
@@ -54,56 +52,4 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/RPGLive_WebApp.loader.js";
       var config = {
-        dataUrl: buildUrl + "/RPGLive_WebApp.data",
-        frameworkUrl: buildUrl + "/RPGLive_WebApp.framework.js",
-        codeUrl: buildUrl + "/RPGLive_WebApp.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "RPG Live Temp",
-        productVersion: "0.1",
-        showBanner: unityShowBanner,
-      };
-
-      // Set mobile layout
-      container.className = "unity-mobile";
-      canvas.className = "unity-mobile";
-
-      loadingBar.style.display = "block";
-
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          window.unityInstance = unityInstance; // зберігаємо глобально
-          loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
-
-          // Надсилання даних Telegram тільки після готовності Unity
-          if (window.Telegram && Telegram.WebApp) {
-            const tg = Telegram.WebApp;
-            tg.ready();
-
-            const user = tg.initDataUnsafe.user;
-            if (user) {
-              const json = JSON.stringify(user);
-              unityInstance.SendMessage("TelegramBridge", "OnUserData", json);
-              console.log("User sent to Unity:", json);
-            } else {
-              console.warn("User object is null");
-            }
-          } else {
-            console.warn("Telegram.WebApp API is not available");
-          }
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-
-      document.body.appendChild(script);
-    </script>
-  </body>
-</html>
+        data
