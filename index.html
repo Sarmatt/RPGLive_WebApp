@@ -127,11 +127,14 @@
       document.body.appendChild(script);
 
 window.addEventListener('DOMContentLoaded', () => {
+  console.log("DOMContentLoaded 1");
     const tg = window.Telegram.WebApp;
     tg.ready(); // обов'язково
-
+  console.log("DOMContentLoaded 2");
     const user = tg.initDataUnsafe.user;
+
     if (user) {
+         console.log("User is not null");
       const json = JSON.stringify(user);
       // передаємо в Unity
       window.unityInstance.SendMessage("TelegramBridge", "OnUserData", json);
