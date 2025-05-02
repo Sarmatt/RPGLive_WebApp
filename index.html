@@ -24,6 +24,20 @@
       </div>
     </div>
 
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const tg = window.Telegram.WebApp;
+    tg.ready(); // обов'язково
+
+    const user = tg.initDataUnsafe.user;
+    if (user) {
+      const json = JSON.stringify(user);
+      // передаємо в Unity
+      window.unityInstance.SendMessage("TelegramBridge", "OnUserData", json);
+    }
+  });
+</script>
+
     <script>
 
       var container = document.querySelector("#unity-container");
