@@ -130,7 +130,7 @@
             window.addEventListener('DOMContentLoaded', () => {
         // Log the Telegram object to the console for debugging
         console.log("window.Telegram:", window.Telegram);
-        
+         window.unityInstance.SendMessage("TelegramBridge", "DisplayDebugText");
         if (window.Telegram && window.Telegram.WebApp) {
           const tg = window.Telegram.WebApp;
           tg.ready(); // обов'язково
@@ -149,7 +149,7 @@
 
 
 
-            
+
 
     </script>
   </body>
